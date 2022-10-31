@@ -1,2 +1,2 @@
-# tic-tac-toe
+# Xs and Os
 Play tic-tac-toe in your browser!
