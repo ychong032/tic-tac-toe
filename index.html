@@ -14,21 +14,41 @@
         Xs and Os
     </div>
     <div class="content">
-        <div class="game-container">
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
-            <div class="cell"></div>
+        <div class="menu">
+            <h3 class="menu-header">
+                Enter Player Names
+            </h3>
+            <form action="javascript:void(0)" onsubmit="displayController.startGame()">
+                <div class="field">
+                    <label for="player1">Player 1</label>
+                    <input type="text" id="player1" placeholder="Enter name" required>
+                </div>
+                <div class="field">
+                    <label for="player2">Player 2</label>
+                    <input type="text" id="player2" placeholder="Enter name" required>
+                </div>
+                <input type="submit">
+            </form>
         </div>
+        <h2 id="turn">Press "Start game" to play</h2>
+        <div class="game-container">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+        <button id="start-game">Start game</button>
+        <button id="restart">Restart</button>
     </div>
     <div class="footer">
         <p>Made by ychong032</p>
         <a href="https://github.com/ychong032"><i class="fa-brands fa-github fa-lg"></i></a>
     </div>
+    <div class="overlay"></div>
 </body>
 </html>
