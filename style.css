@@ -1,6 +1,25 @@
+@font-face {
+    font-family: 'kindergarten';
+    src: url('assets/kindergarten.woff2') format('woff2'),
+         url('assets/kindergarten.woff') format('woff');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Letters for Learners';
+    src: url('assets/LettersforLearners.woff2') format('woff2'),
+         url('assets/LettersforLearners.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 * {
     padding: 0;
     margin: 0;
+    font-family: "Letters for Learners";
 }
 
 body {
@@ -11,7 +30,7 @@ body {
 }
 
 .header {
-    font-size: 42px;
+    font-size: 4rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -33,9 +52,21 @@ body {
     position: relative;
 }
 
+.buttons {
+    display: flex;
+    gap: 1rem;
+}
+
 #restart, #start-game {
-    font-size: large;
+    font-size: 2rem;
     padding: 4px 8px;
+    background-color: #F6F6C9;
+    border: 1px solid;
+}
+
+#restart:hover, #start-game:hover {
+    background-color: #dedea8;
+    cursor: pointer;
 }
 
 #restart {
@@ -47,11 +78,14 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 1rem;
+    padding: 1rem 2rem;
     background-color: #EAEAEA;
-    border-radius: 8px;
     display: none;
     z-index: 1;
+}
+
+.menu * {
+    font-size: 2rem;
 }
 
 .menu-header {
@@ -64,22 +98,23 @@ body {
     display: flex;
     flex-direction: column;
     font-size: large;
+    width: 100%;
 }
 
 input[type="submit"], .field input {
-    font-size: large;
+    font-size: 2rem;
 }
 
 input[type="submit"] {
     padding: 4px 8px;
     border-radius: 8px;
     border: none;
-    background-color: white;
+    background-color: #F6F6C9;
 }
 
 input[type="submit"]:hover {
     cursor: pointer;
-    background-color: rgb(193, 193, 193);
+    background-color: #dedea8;
 }
 
 .menu form {
@@ -89,21 +124,48 @@ input[type="submit"]:hover {
     gap: 1rem;
 }
 
+#lock {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#turn {
+    font-size: 2.2rem;
+}
+
 .game-container {
     width: 450px;
     height: 450px;
     display: grid;
     grid-template: repeat(3, 1fr) / repeat(3, 1fr);
-    background-color: grey;
 }
 
 .cell {
-    border: 1px solid;
     box-sizing: border-box;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 40px;
+    font-size: 4rem;
+    font-family: "kindergarten";
+    transition: 0.5s;
+}
+
+.cell:nth-child(3n + 1) {
+    border-right: 4px solid rgba(0, 0, 0, 0.502);
+}
+
+.cell:nth-child(3n) {
+    border-left: 4px solid rgba(0, 0, 0, 0.502);
+}
+
+.cell:nth-child(n + 1):nth-child(-n + 6) {
+    border-bottom: 4px solid rgba(0, 0, 0, 0.502);
+}
+
+.cell:hover {
+    background-color: grey;
 }
 
 .footer {
@@ -115,7 +177,7 @@ input[type="submit"]:hover {
     width: 100%;
     box-sizing: border-box;
     padding: 0.5rem;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     color: rgba(0, 0, 0, 0.701);
 }
 
@@ -137,4 +199,48 @@ input[type="submit"]:hover {
     height: 100%;
     position: fixed;
     background-color: rgba(108, 107, 107, 0.703);
+}
+
+.congrats {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    background-color: #74ea74;
+    font-size: 1.5rem;
+    width: 30%;
+    display: none;
+}
+
+.congrats-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    font-size: 2rem;
+}
+
+#close {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    color: white;
+    font-size: 1.5rem;
+}
+
+#close:hover {
+    color: grey;
+    cursor: pointer;
+}
+
+#win, #tie {
+    color: yellow;
+    display: none;
+}
+
+.congrats p {
+    color: white;
 }

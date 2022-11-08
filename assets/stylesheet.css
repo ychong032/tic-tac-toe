@@ -1,0 +1,9 @@
+@font-face {
+    font-family: 'Letters for Learners';
+    src: url('LettersforLearners.woff2') format('woff2'),
+        url('LettersforLearners.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

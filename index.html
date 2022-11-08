@@ -20,15 +20,23 @@
             </h3>
             <form action="javascript:void(0)" onsubmit="displayController.startGame()">
                 <div class="field">
-                    <label for="player1">Player 1</label>
-                    <input type="text" id="player1" placeholder="Enter name" required>
+                    <label for="player1">Player 1 (X)</label>
+                    <input type="text" id="player1" placeholder="Enter name" required minlength="2" maxlength="15">
                 </div>
                 <div class="field">
-                    <label for="player2">Player 2</label>
-                    <input type="text" id="player2" placeholder="Enter name" required>
+                    <label for="player2">Player 2 (O)</label>
+                    <input type="text" id="player2" placeholder="Enter name" required minlength="2" maxlength="15">
                 </div>
                 <input type="submit">
             </form>
+        </div>
+        <div class="congrats">
+            <div class="congrats-content">
+                <i class="fa-solid fa-xmark fa-2x" id="close"></i>
+                <i class="fa-solid fa-face-laugh fa-3x" id="win"></i>
+                <i class="fa-solid fa-face-meh fa-3x" id="tie"></i>
+                <p>Player NIL wins!</p>
+            </div>
         </div>
         <h2 id="turn">Press "Start game" to play</h2>
         <div class="game-container">
@@ -42,13 +50,16 @@
             <div class="cell" data-index="7"></div>
             <div class="cell" data-index="8"></div>
         </div>
-        <button id="start-game">Start game</button>
-        <button id="restart">Restart</button>
+        <div class="buttons">
+            <button id="start-game">Start game</button>
+            <button id="restart">Restart</button>
+        </div>
     </div>
     <div class="footer">
         <p>Made by ychong032</p>
         <a href="https://github.com/ychong032"><i class="fa-brands fa-github fa-lg"></i></a>
     </div>
     <div class="overlay"></div>
+    
 </body>
 </html>
