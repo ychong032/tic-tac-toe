@@ -16,18 +16,23 @@
     <div class="content">
         <div class="menu">
             <h3 class="menu-header">
-                Enter Player Names
+                Game settings
             </h3>
             <form action="javascript:void(0)" onsubmit="displayController.startGame()">
+                <div class="mode-container">
+                    <p>Mode:</p>
+                    <button type="button" id="mode">1 player</button>
+                </div>
                 <div class="field">
                     <label for="player1">Player 1 (X)</label>
                     <input type="text" id="player1" placeholder="Enter name" required minlength="2" maxlength="15">
                 </div>
-                <div class="field">
+                <div class="field" id="player2-field">
                     <label for="player2">Player 2 (O)</label>
-                    <input type="text" id="player2" placeholder="Enter name" required minlength="2" maxlength="15">
+                    <input type="text" id="player2" placeholder="Enter name" minlength="2" maxlength="15">
                 </div>
-                <input type="submit">
+                <hr>
+                <input type="submit" value="Play">
             </form>
         </div>
         <div class="congrats">

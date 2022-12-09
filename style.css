@@ -79,9 +79,10 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     padding: 1rem 2rem;
-    background-color: #EAEAEA;
+    background-color: rgb(193, 221, 231);
     display: none;
     z-index: 1;
+    border: 1px solid;
 }
 
 .menu * {
@@ -94,6 +95,23 @@ body {
     margin-bottom: 1rem;
 }
 
+.mode-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#mode {
+    border: 1px solid;
+    padding: 4px 16px;
+}
+
+#mode:hover {
+    cursor: pointer;
+    background-color: lightgray;
+}
+
 .field {
     display: flex;
     flex-direction: column;
@@ -101,15 +119,19 @@ body {
     width: 100%;
 }
 
+#player2-field {
+    display: none;
+}
+
 input[type="submit"], .field input {
     font-size: 2rem;
 }
 
 input[type="submit"] {
-    padding: 4px 8px;
+    padding: 4px 24px;
     border-radius: 8px;
-    border: none;
-    background-color: #F6F6C9;
+    border: 1px solid;
+    background-color: #f9dd6f;
 }
 
 input[type="submit"]:hover {
@@ -124,11 +146,10 @@ input[type="submit"]:hover {
     gap: 1rem;
 }
 
-#lock {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+hr {
+    border: 1px solid black;
+    background-color: black;
+    width: 100%;
 }
 
 #turn {
@@ -166,6 +187,7 @@ input[type="submit"]:hover {
 
 .cell:hover {
     background-color: grey;
+    cursor: not-allowed;
 }
 
 .footer {

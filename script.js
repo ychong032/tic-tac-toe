@@ -29,8 +29,10 @@ const displayController = (() => {
     const congratsText = document.querySelector(".congrats-content p");
     const happyFace = document.querySelector("#win");
     const mehFace = document.querySelector("#tie");
+    const modeButton = document.querySelector("#mode");
     const player1 = document.querySelector("#player1");
     const player2 = document.querySelector("#player2");
+    const player2Field = document.querySelector("#player2-field");
     const turnText = document.querySelector("#turn");
     const showMenu = () => {
         menu.style.display = "inline";
@@ -46,23 +48,13 @@ const displayController = (() => {
         congrats.style.display = "none";
         overlay.style.display = "none";
     }
-    startButton.addEventListener('click', showMenu);
-    overlay.addEventListener('click', (e) => {
-        if (e.target !== menu && menu.style.display === "inline") {
-            hideMenu();
-        } else if (e.target !== congrats && congrats.style.display === "inline") {
-            hideCongrats();
-        }
-    });
-    close.addEventListener('click', hideCongrats);
     const startGame = () => {
         hideMenu();
-        window.startGame(player1.value, player2.value);
+        window.startGame(player1.value, modeButton.textContent === "1 player" ? null : player2.value);
         menuForm.reset();
-        startButton.textContent = "Change player names";
+        startButton.textContent = "Change game settings";
         restartButton.style.display = "inline";
     };
-
     const endGame = winner => {
         congrats.style.display = "inline";
         overlay.style.display = "inline";
@@ -77,13 +69,35 @@ const displayController = (() => {
         }
     }
 
+    close.addEventListener('click', hideCongrats);
+    startButton.addEventListener('click', showMenu);
+    overlay.addEventListener('click', (e) => {
+        if (e.target !== menu && menu.style.display === "inline") {
+            hideMenu();
+        } else if (e.target !== congrats && congrats.style.display === "inline") {
+            hideCongrats();
+        }
+    });
+    modeButton.addEventListener('click', (e) => {
+        if (e.target.textContent === "1 player") {
+            e.target.textContent = "2 players";
+            player2Field.style.display = "flex";
+            player2.required = true;
+        } else {
+            e.target.textContent = "1 player";
+            player2Field.style.display = "none";
+            player2.required = false;
+        }
+    })
+
     return {startGame, turnText, endGame, restartButton};
 })();
 
 const gameController = ((name1, name2) => {
+    let isSinglePlayer = name2 === null ? true : false;
     const cells = Array.from(document.querySelectorAll(".cell"));
     const player1 = Player(name1, 'X');
-    const player2 = Player(name2, 'O');
+    const player2 = Player(name2 === null ? "AI" : name2, 'O');
     let gameOver = false;
     let activePlayer = player1;
     let cellsMarked = 0;
@@ -154,8 +168,8 @@ const gameController = ((name1, name2) => {
                 console.log("Something went wrong in game logic...");
         }
     }
-    const markCell = e => {
-        e.target.style.color = activePlayer.symbol === 'X' ? "red" : 'blue';
+    const markCell = async e => {
+        e.target.style.color = activePlayer.symbol === 'X' ? "red" : "blue";
         e.target.textContent = activePlayer.symbol;
         let index = parseInt(e.target.getAttribute("data-index"));
         gameBoard.addToArray(activePlayer.symbol, index);
@@ -163,20 +177,45 @@ const gameController = ((name1, name2) => {
 
         checkGameOver(index);
         if (gameOver) {
-            cells.forEach(item => item.removeEventListener('click', markCell));
+            cells.forEach(item => {
+                item.style.cursor = "not-allowed";
+                item.removeEventListener('click', markCell);
+            });
             displayController.endGame(activePlayer.name);
         } else if (cellsMarked === 9) {
-            cells.forEach(item => item.removeEventListener('click', markCell));
+            cells.forEach(item => {
+                item.style.cursor = "not-allowed";
+                item.removeEventListener('click', markCell);
+            });
             displayController.endGame(null);
         } else {
             activePlayer = activePlayer === player1 ? player2 : player1;
             displayController.turnText.textContent = `${activePlayer.name}'s turn. (${activePlayer.symbol})`;
+            if (activePlayer === player2 && isSinglePlayer) {
+                document.body.style.pointerEvents = "none";
+                await new Promise(r => setTimeout(r, 1500));
+                document.body.style.pointerEvents = "all";
+                executeComputerMove();
+            }
+        }
+    };
+
+    const executeComputerMove = () => {
+        let gameArray = gameBoard.getArray();
+        while (true) {
+            let choice = Math.floor(Math.random() * 9);
+            console.log(`Choice: ${choice}`);
+            if (!gameArray[choice]) {
+                document.querySelector(`.cell[data-index="${choice}"]`).click();
+                break;
+            }
         }
     };
 
     const resetGame = () => {
         cells.forEach(item => {
             item.textContent = '';
+            item.style.cursor = "auto";
             item.addEventListener('click', markCell, {once: true});
         });
         cellsMarked = 0;
@@ -200,8 +239,3 @@ function startGame(firstPlayerName, secondPlayerName) {
     let game = gameController(firstPlayerName, secondPlayerName);
     game.resetGame();
 }
-
-
-
-
-
